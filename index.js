@@ -47,7 +47,7 @@ server.post('/webhook', express.raw({type: 'application/json'}), async(request, 
       const order = await Order.findById(paymentIntentSucceeded.metadata.orderId)
       order.paymentStatus = 'received';
       await order.save()
-      
+
       break;
     // ... handle other event types
     default:
@@ -90,6 +90,7 @@ server.use('/users', isAuth(), usersRouter.router);
 server.use('/auth', authRouter.router);
 server.use('/cart', isAuth(), cartRouter.router);
 server.use('/orders', isAuth(), ordersRouter.router);
+//this line will add to make react router work in case of other routes doesn't match
 server.get('*',(req, res) => res.sendFile(path.resolve('build', 'index.html')));
 
 //passport strategies
